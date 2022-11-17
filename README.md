@@ -1,5 +1,4 @@
-`react` `idcamp-2022`
-
+`react` `js` `idcamp-2022`
 # Become React Web Developer Expert
 
 - Linter dan Clean Code
