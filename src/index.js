@@ -1,8 +1,7 @@
 /**
 * Application code
 */
-
-import { createStore } from './redux';
+import { createStore } from 'redux';
 
 function todosReducer(todos = [], action = {}) {
   if (action.type === 'ADD_TODO') {
