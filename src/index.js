@@ -1,139 +1,65 @@
 /**
-* Application code
+Dalam menghubungkan Redux di React, react-redux memanfaatkan teknologi React Context agar Redux store dapat diakses pada seluruh cakupan aplikasi.
+Library ini menyediakan komponen Provider dan kita bisa memberikan Redux store pada komponen propertinya.
+
+Agar store dapat diakses oleh seluruh cakupan aplikasi, Anda harus membungkus aplikasi dengan komponen Provider ini.
 */
-import { createStore } from 'redux';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 
-function todosReducer(todos = [], action = {}) {
-  if (action.type === 'ADD_TODO') {
-    return [...todos, action.payload];
+import App from './App';
+import store from './store';
+
+const root = createRoot(document.getElementById('root'));
+
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+/* 
+Jika terjadi perubahan nilai state dalam store, komponen (pada cakupan aplikasi) yang mengakses nilai state dalam store akan secara otomatis di-render ulang.
+
+Library react-redux juga menyediakan custom hooks untuk berinteraksi dengan store pada komponen React.
+ Contohnya, untuk mengakses nilai state dalam store, Anda bisa gunakan fungsi hooks useSelector() seperti ini.
+ */
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+function TodosList() {
+  // states berisi todos dan goals
+  const states = useSelector((states) => states);
+
+  // ...
+}
+
+/* Hooks useSelector() menerima satu argumen, yaitu sebuah fungsi yang mengembalikan nilai state dalam store. 
+Kode di atas adalah contoh cara mengakses seluruh state yang berada dalam store. Namun, jika komponen hanya membutuhkan salah satu state secara spesifik,
+ Anda bisa menyesuaikan nilai yang dikembalikan oleh argumen fungsi useSelector(). 
+ Contohnya, jika Anda hanya butuh state todos saja, Anda bisa menulis argumen fungsi seperti ini.
+ */
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+function TodosList() {
+  const todos = useSelector((states) => states.todos);
+
+  // ...
+}
+Selain fungsi hooks useSelector(), ada juga fungsi hooks lain, yaitu useDispatch().Fungsi hooks ini digunakan untuk mengakses fungsi dispatch() dalam store.Jadi, kita bisa mengubah nilai state pada komponen React.
+
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+function TodosList() {
+  const todos = useSelector((states) => states.todos);
+  const dispatch = useDispatch();
+
+  function onAddTodo(text) {
+    const id = `todo-${+ new Date()}`
+    dispatch(addTodoActionCreator({ id, text }));
   }
 
-  if (action.type === 'DELETE_TODO') {
-    return todos.filter((todo) => todo.id !== action.payload.id);
-  }
-
-  if (action.type === 'TOGGLE_TODO') {
-    // eslint-disable-next-line max-len
-    return todos.map((todo) => (todo.id === action.payload.id ? { ...todo, complete: !todo.complete } : todo));
-  }
-
-  return todos;
+  // ...
 }
-
-function addTodoActionCreator({ id, text }) {
-  return {
-    type: 'ADD_TODO',
-    payload: {
-      id,
-      text,
-      complete: false,
-    },
-  };
-}
-
-function deleteTodoActionCreator(id) {
-  return {
-    type: 'DELETE_TODO',
-    payload: {
-      id,
-    },
-  };
-}
-
-function toggleTodoActionCreator(id) {
-  return {
-    type: 'TOGGLE_TODO',
-    payload: {
-      id,
-    },
-  };
-}
-
-function addGoalActionCreator({ id, text }) {
-  return {
-    type: 'ADD_GOAL',
-    payload: {
-      id,
-      text,
-    },
-  };
-}
-
-function deleteGoalActionCreator(id) {
-  return {
-    type: 'DELETE_GOAL',
-    payload: {
-      id,
-    },
-  };
-}
-
-function goalsReducer(goals = [], action = {}) {
-  if (action.type === 'ADD_GOAL') {
-    return [...goals, action.payload];
-  }
-
-  if (action.type === 'DELETE_GOAL') {
-    return goals.filter((goal) => goal.id !== action.payload.id);
-  }
-
-  return goals;
-}
-
-function rootReducer(state = {}, action = {}) {
-  return {
-    todos: todosReducer(state.todos, action),
-    goals: goalsReducer(state.goals, action),
-  };
-}
-
-const store = createStore(rootReducer);
-
-store.subscribe(() => {
-  console.log('state changed!', store.getState());
-});
-
-// Trigger event To-do
-store.dispatch(
-  addTodoActionCreator({
-    id: 1,
-    text: 'Learn React',
-  }),
-);
-
-store.dispatch(
-  addTodoActionCreator({
-    id: 2,
-    text: 'Learn Redux',
-  }),
-);
-
-store.dispatch(
-  addTodoActionCreator({
-    id: 3,
-    text: 'Learn JavaScript',
-  }),
-);
-
-// menghapus todo dengan id 3
-store.dispatch(deleteTodoActionCreator(3));
-
-// mengubah Learn React menjadi complete
-store.dispatch(toggleTodoActionCreator(1));
-
-// Trigger event Goals
-store.dispatch(
-  addGoalActionCreator({
-    id: 1,
-    text: 'Get a Doctorate',
-  }),
-);
-
-store.dispatch(
-  addGoalActionCreator({
-    id: 2,
-    text: 'Be an Entrepreneur',
-  }),
-);
-
-store.dispatch(deleteGoalActionCreator(1));
