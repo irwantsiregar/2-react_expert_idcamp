@@ -16,4 +16,15 @@ function todoDeletionCheck(store) {
   };
 }
 
-export { todoDeletionCheck };
+// THUNK MIDDLEWARE (fungsi middleware)
+function thunk(store) {
+  return (next) => (action) => {
+    if (typeof action === 'function') {
+      return action(store.dispatch, store.getState);
+    }
+
+    return next(action);
+  };
+}
+
+export { todoDeletionCheck, thunk };
