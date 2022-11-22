@@ -1,8 +1,15 @@
 import mockAPI from '../../data/mockAPI';
 
+const ActionType = {
+  ADD_TODO: 'ADD_TODO',
+  DELETE_TODO: 'DELETE_TODO',
+  TOGGLE_TODO: 'TOGGLE_TODO',
+  RECEIVE_TODOS: 'RECEIVE_TODOS',
+};
+
 function addTodoActionCreator({ id, text }) {
   return {
-    type: 'ADD_TODO',
+    type: ActionType.ADD_TODO,
     payload: {
       id,
       text,
@@ -13,7 +20,7 @@ function addTodoActionCreator({ id, text }) {
 
 function deleteTodoActionCreator(id) {
   return {
-    type: 'DELETE_TODO',
+    type: ActionType.DELETE_TODO,
     payload: {
       id,
     },
@@ -22,7 +29,7 @@ function deleteTodoActionCreator(id) {
 
 function toggleTodoActionCreator(id) {
   return {
-    type: 'TOGGLE_TODO',
+    type: ActionType.TOGGLE_TODO,
     payload: {
       id,
     },
@@ -31,7 +38,7 @@ function toggleTodoActionCreator(id) {
 
 function receiveTodosActionCreator(todos) {
   return {
-    type: 'RECEIVE_TODOS',
+    type: ActionType.RECEIVE_TODOS,
     payload: {
       todos,
     },
@@ -62,8 +69,15 @@ function asyncDeleteTodo(id) {
 
 function asyncToggleTodo(id) {
   return async (dispatch) => {
-    await mockAPI.toggleTodo(id);
     dispatch(toggleTodoActionCreator(id));
+    try {
+      await mockAPI.toggleTodo(id);
+    } catch (error) {
+      // eslint-disable-next-line no-alert
+      alert(error.message);
+      // rollback state change with re-toggling the to-do item.
+      dispatch(toggleTodoActionCreator(id));
+    }
   };
 }
 
@@ -76,4 +90,5 @@ export {
   asyncAddTodo,
   asyncDeleteTodo,
   asyncToggleTodo,
+  ActionType,
 };

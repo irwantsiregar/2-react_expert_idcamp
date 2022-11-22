@@ -27,7 +27,7 @@ function GoalsList() {
 
       <ul>
         {goals.map((goal) => (
-          <li>
+          <li key={goal.id}>
             <GoalItem {...goal} deleteGoal={onDeleteGoal} />
           </li>
         ))}

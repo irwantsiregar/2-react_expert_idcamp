@@ -5,7 +5,6 @@ function todoDeletionCheck(store) {
     if (action.type === 'DELETE_TODO') {
       const { todos } = store.getState();
       const todosToBeDeleted = todos.find((todo) => todo.id === action.payload.id);
-      console.log(todosToBeDeleted);
 
       if (!todosToBeDeleted.complete) {
         alert('Tidak bisa menghapus to-do yang belum selesai.');

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function GoalInput({ addGoal }) {
   const [text, setText] = useState('');
@@ -12,5 +13,9 @@ function GoalInput({ addGoal }) {
     </div>
   );
 }
+
+GoalInput.propTypes = {
+  addGoal: PropTypes.func.isRequired,
+};
 
 export default GoalInput;

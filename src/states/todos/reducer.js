@@ -1,27 +1,18 @@
+import { ActionType } from './action';
+
 function todosReducer(todos = [], action = {}) {
-  if (action.type === 'ADD_TODO') {
-    return [...todos, action.payload];
+  switch (action.type) {
+    case ActionType.RECEIVE_TODOS:
+      return action.payload.todos;
+    case ActionType.ADD_TODO:
+      return [...todos, action.payload];
+    case ActionType.DELETE_TODO:
+      return todos.filter((todo) => todo.id !== action.payload.id);
+    case ActionType.TOGGLE_TODO:
+      return todos.map((todo) => (todo.id === action.payload.id ? { ...todo, complete: !todo.complete } : todo));
+    default:
+      return todos;
   }
-
-  if (action.type === 'DELETE_TODO') {
-    return todos.filter((todo) => todo.id !== action.payload.id);
-  }
-
-  if (action.type === 'TOGGLE_TODO') {
-    return todos.map((todo) => {
-      if (todo.id === action.payload.id) {
-        return { ...todo, complete: !todo.complete };
-      }
-
-      return todo;
-    });
-  }
-
-  if (action.type === 'RECEIVE_TODOS') {
-    return action.payload.todos;
-  }
-
-  return todos;
 }
 
 export { todosReducer };

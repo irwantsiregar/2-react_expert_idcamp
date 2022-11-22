@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function TodoItem({
   id, text, complete, toggleTodo, deleteTodo,
@@ -11,5 +12,13 @@ function TodoItem({
     </div>
   );
 }
+
+TodoItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  complete: PropTypes.bool.isRequired,
+  toggleTodo: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
+};
 
 export default TodoItem;

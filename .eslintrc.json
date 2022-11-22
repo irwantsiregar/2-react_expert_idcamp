@@ -25,6 +25,7 @@
         "react/button-has-type": "off",
         "react/jsx-props-no-spreading": "off",
         "no-unused-vars": "off",
-        "react/jsx-no-bind": "off"
+        "react/jsx-no-bind": "off",
+        "max-len": "off"
     }
 }
