@@ -20,6 +20,7 @@
         "react/jsx-filename-extension": "off",
         "import/prefer-default-export": "off",
         "no-console": "off",
+        "no-alert": "off",
         "linebreak-style": "off",
         "react/prop-types": "off",
         "react/button-has-type": "off",
