@@ -1,22 +1,18 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
-  Grid, Box, Typography, Link, Container, Checkbox, FormControlLabel, TextField, CssBaseline, Avatar, Button,
+  Grid, Box, Typography, Link, Container, TextField, CssBaseline, Avatar, Button, Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useInput from '../../../hooks/useInput';
 import Copyright from './Copyright';
 
 const theme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+export default function LoginInput({ login, message }) {
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
 
   return (
     <ThemeProvider theme={theme}>
@@ -36,33 +32,40 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
+            {
+              message && (
+                <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
+                  {message}
+                </Alert>
+              )
+            }
             <TextField
-              margin="normal"
-              required
-              fullWidth
+              value={email}
+              onChange={onEmailChange}
+              type="email"
+              name="email"
               id="email"
               label="Email Address"
-              name="email"
               autoComplete="email"
+              margin="normal"
               autoFocus
+              required
+              fullWidth
             />
             <TextField
+              value={password}
+              onChange={onPasswordChange}
+              type="password"
+              name="password"
+              id="password"
+              label="Password"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
-              type="submit"
+              onClick={() => login({ email, password })}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -88,3 +91,8 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+LoginInput.propTypes = {
+  login: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+};

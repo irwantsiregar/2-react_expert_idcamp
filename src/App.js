@@ -1,26 +1,85 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/SignInPage';
-import RegisterPage from './pages/SignUpPage';
+import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import ThreadsPage from './pages/ThreadsPage';
-import StandingsPage from './pages/StandingsPage';
+import LeaderBoardsPage from './pages/LeaderBoardsPage';
 import AddThreadPage from './pages/AddThreadPage';
 import MyProfilPage from './pages/MyProfilPage';
+import NotFoundPage from './pages/NotFoundPage';
 import DetailThreadPage from './pages/DetailThreadPage';
+import TopAppBar from './components/header/TopAppBar';
+import BottomAppBar from './components/footer/BottomAppBar';
+import Loading from './components/Loading';
+import { asyncPreloadProcess } from './states/isPreload/action';
+import { asyncUnsetAuthUser } from './states/authUser/action';
 
 export default function App() {
-  return (
-    <main>
-      <Routes>
-        <Route path="/*" element={<ThreadsPage />} />
-        <Route path="/add-thread" element={<AddThreadPage />} />
-        <Route path="/standings" element={<StandingsPage />} />
-        <Route path="/profile" element={<MyProfilPage />} />
-        <Route path="/thread/:id" element={<DetailThreadPage />} />
+  const {
+    authUser = null,
+    isPreload = false,
+  } = useSelector((states) => states);
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
-    </main>
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProcess());
+  }, [dispatch]);
+
+  const onLogOut = () => {
+    dispatch(asyncUnsetAuthUser());
+    navigate('/login');
+  };
+
+  if (isPreload) {
+    return null;
+  }
+
+  if (authUser === null) {
+    return (
+      <>
+        <Loading />
+        <header>
+          <TopAppBar authUser={authUser} />
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<ThreadsPage />} />
+            <Route path="/standings" element={<LeaderBoardsPage />} />
+            <Route path="/thread/:id" element={<DetailThreadPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/*" element={<LoginPage />} />
+          </Routes>
+        </main>
+        <footer>
+          <BottomAppBar authUser={authUser} />
+        </footer>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Loading />
+      <header>
+        <TopAppBar authUser={authUser} logOut={onLogOut} />
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<ThreadsPage />} />
+          <Route path="/standings" element={<LeaderBoardsPage />} />
+          <Route path="/thread/:id" element={<DetailThreadPage />} />
+          <Route path="/add-thread" element={<AddThreadPage />} />
+          <Route path={`/${authUser.name.toLowerCase().split(' ').join('-')}`} element={<MyProfilPage />} />
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
+      <footer>
+        <BottomAppBar authUser={authUser} />
+      </footer>
+    </>
   );
 }

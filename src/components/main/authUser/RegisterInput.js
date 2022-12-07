@@ -1,22 +1,22 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
-  Grid, Box, Typography, Link, Container, Checkbox, FormControlLabel, TextField, CssBaseline, Avatar, Button,
+  Grid, Box, Typography, Link, Container, TextField, CssBaseline, Avatar, Button, Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useInput from '../../../hooks/useInput';
 import Copyright from './Copyright';
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+export default function RegisterInput({ register, message }) {
+  const [firstName, onFirstNameChange] = useInput('');
+  const [lastName, onLastNameChange] = useInput('');
+  const [email, onEmailChange] = useInput('');
+  const [password, onPasswordChange] = useInput('');
+
+  const name = (!lastName) ? firstName : `${firstName} ${lastName}`;
 
   return (
     <ThemeProvider theme={theme}>
@@ -24,7 +24,7 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 3,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -36,59 +36,65 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
+            {
+              message && (
+                <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
+                  {message}
+                </Alert>
+              )
+            }
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
+                  value={firstName}
+                  onChange={onFirstNameChange}
                   name="firstName"
-                  required
-                  fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  required
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
-                  fullWidth
+                  value={lastName}
+                  onChange={onLastNameChange}
                   id="lastName"
-                  label="Last Name"
                   name="lastName"
-                  autoComplete="family-name"
+                  label="Last Name"
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
-                  fullWidth
+                  value={email}
+                  onChange={onEmailChange}
+                  type="email"
+                  name="email"
                   id="email"
                   label="Email Address"
-                  name="email"
                   autoComplete="email"
+                  required
+                  fullWidth
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
-                  fullWidth
+                  value={password}
+                  onChange={onPasswordChange}
+                  type="password"
                   name="password"
                   label="Password"
-                  type="password"
                   id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  required
+                  fullWidth
                 />
               </Grid>
             </Grid>
             <Button
-              type="submit"
+              onClick={() => register({ email, name, password })}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -109,3 +115,8 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+
+RegisterInput.propTypes = {
+  register: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+};

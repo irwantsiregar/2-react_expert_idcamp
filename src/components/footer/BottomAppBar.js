@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import {
   AppBar, Container, Box, CssBaseline, Toolbar, IconButton, Fab, Link,
@@ -16,7 +17,7 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-export default function BottomAppBar() {
+export default function BottomAppBar({ authUser }) {
   return (
     <>
       <CssBaseline />
@@ -31,11 +32,13 @@ export default function BottomAppBar() {
                 <ForumIcon sx={{ color: '#3b82f6' }} fontSize="large" />
               </Link>
             </IconButton>
-            <StyledFab aria-label="add">
-              <Link href="/add-thread" underline="none">
-                <AddIcon sx={{ color: '#2563eb', fontSize: 30 }} />
-              </Link>
-            </StyledFab>
+            {
+              authUser ? (
+                <StyledFab component="a" href="/add-thread" aria-label="add">
+                  <AddIcon sx={{ color: '#2563eb', fontSize: 30 }} />
+                </StyledFab>
+              ) : ''
+            }
             <Box sx={{ flexGrow: 1 }} />
             <IconButton>
               <Link href="/standings" underline="none">

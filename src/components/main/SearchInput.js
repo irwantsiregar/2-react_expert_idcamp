@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, IconButton, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -47,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchInput() {
+export default function SearchInput({ keyword, keywordChange }) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -63,10 +64,10 @@ export default function SearchInput() {
     }
     setState({ ...state, [anchor]: open });
   };
-  //
+
   return (
     <Toolbar className="w-full md:w-1/4 justify-end rounded-md shadow-lg bg-[#FEFEFE]">
-      <Search>
+      <Search value={keyword} onChange={(event) => keywordChange(event.target.value)}>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
@@ -82,3 +83,8 @@ export default function SearchInput() {
     </Toolbar>
   );
 }
+
+SearchInput.propTypes = {
+  keywordChange: PropTypes.func.isRequired,
+  keyword: PropTypes.string.isRequired,
+};

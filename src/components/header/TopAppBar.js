@@ -1,10 +1,14 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
-  AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, MenuItem, Tooltip,
+  AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, MenuItem, Tooltip, Link, Button,
   Badge, Avatar, ListItemIcon,
 } from '@mui/material';
 import ControlCameraIcon from '@mui/icons-material/ControlCamera';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { styled } from '@mui/material/styles';
 import ToggleTheme from '../ToggleTheme';
@@ -38,7 +42,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function TopAppBar() {
+export default function TopAppBar({ authUser, logOut }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -56,6 +60,114 @@ export default function TopAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const renderAfterLogin = () => (
+    <>
+      <Box className="pr-5 md:pr-2">
+        <Tooltip title={authUser.name}>
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <StyledBadge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              variant="dot"
+            >
+              <Avatar alt={authUser.name} src={authUser.avatar} fontSize="small" />
+            </StyledBadge>
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          <MenuItem component="a" href={`/${authUser.name.toLowerCase().split(' ').join('-')}`} onClick={handleCloseUserMenu}>
+            <ListItemIcon>
+              <PersonOutlineIcon />
+            </ListItemIcon>
+            Profile
+          </MenuItem>
+          <MenuItem onClick={logOut}>
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Menu>
+      </Box>
+      <ToggleTheme />
+    </>
+  );
+
+  const renderBeforeLogin = () => (
+    <>
+      <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+        <Link href="/login" underline="none">
+          <Button variant="outlined" color="primary" sx={{ mr: 2 }}>
+            LOGIN
+          </Button>
+        </Link>
+        <Link href="/register" underline="none">
+          <Button variant="contained" color="primary">
+            REGISTER
+          </Button>
+        </Link>
+      </Box>
+      <ToggleTheme />
+      <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenNavMenu}
+        >
+          <MenuIcon fontSize="large" />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorElNav}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(anchorElNav)}
+          onClose={handleCloseNavMenu}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
+        >
+          <MenuItem component="a" href="/login" onClick={handleCloseUserMenu}>
+            <ListItemIcon>
+              <LoginIcon />
+            </ListItemIcon>
+            Login
+          </MenuItem>
+          <MenuItem component="a" href="/register" onClick={handleCloseUserMenu}>
+            <ListItemIcon>
+              <HowToRegIcon />
+            </ListItemIcon>
+            Register
+          </MenuItem>
+        </Menu>
+      </Box>
+    </>
+  );
 
   return (
     <AppBar sx={{ bgcolor: '#f8fafc' }} position="static">
@@ -80,108 +192,9 @@ export default function TopAppBar() {
           >
             DISKUS
           </Typography>
-          <Box className="pr-5 md:pr-2">
-            <Tooltip title="Nadia Validate">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <StyledBadge
-                  overlap="circular"
-                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                  variant="dot"
-                >
-                  <Avatar alt="Nadia Validate" src="/images/girl.jpg" fontSize="small" />
-                </StyledBadge>
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem component="a" href="/profile" onClick={handleCloseUserMenu}>
-                <ListItemIcon>
-                  <PersonOutlineIcon />
-                </ListItemIcon>
-                Profile
-              </MenuItem>
-              <MenuItem component="a" href="/" onClick={handleCloseUserMenu}>
-                <ListItemIcon>
-                  <LogoutIcon />
-                </ListItemIcon>
-                Logout
-              </MenuItem>
-            </Menu>
-          </Box>
-
-          {/* Line */}
-
-          {/* <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-            <Link href="/login" underline="none">
-              <Button variant="outlined" color="primary" sx={{ mr: 2 }}>
-                LOGIN
-              </Button>
-            </Link>
-            <Link href="/register" underline="none">
-              <Button variant="contained" color="primary">
-                REGISTER
-              </Button>
-            </Link>
-          </Box> */}
-
-          <ToggleTheme />
-
-          {/* <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-                <MenuItem component="a" href="/login" onClick={handleCloseUserMenu}>
-                  <ListItemIcon>
-                    <LoginIcon />
-                  </ListItemIcon>
-                  Login
-                </MenuItem>
-                <MenuItem component="a" href="/register" onClick={handleCloseUserMenu}>
-                  <ListItemIcon>
-                    <HowToRegIcon />
-                  </ListItemIcon>
-                  Register
-                </MenuItem>
-            </Menu>
-          </Box> */}
+          {
+            authUser ? renderAfterLogin() : renderBeforeLogin()
+          }
         </Toolbar>
       </Container>
     </AppBar>

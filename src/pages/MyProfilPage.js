@@ -1,14 +1,11 @@
 import React from 'react';
-import TopAppBar from '../components/header/TopAppBar';
+import { useSelector } from 'react-redux';
 import Profile from '../components/main/Profile';
-import BottomAppBar from '../components/footer/BottomAppBar';
 
 export default function MyProfilPage() {
+  const { authUser } = useSelector((states) => states);
+
   return (
-    <>
-      <TopAppBar />
-      <Profile />
-      <BottomAppBar />
-    </>
+    <Profile {...authUser} />
   );
 }
