@@ -1,12 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Box, Typography, Container, TextField, CssBaseline, Avatar, Button,
+  Box, Typography, Container, TextField, CssBaseline,
+  Avatar, Button, Alert,
 } from '@mui/material';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import useInput from '../../hooks/useInput';
 
-export default function AddThread({ addThread }) {
+export default function AddThread({ addThread, message }) {
   const [title, onTitleChange] = useInput('');
   const [body, onBodyChange] = useInput('');
   const [category, onCategoryChange] = useInput('');
@@ -21,7 +22,14 @@ export default function AddThread({ addThread }) {
         <Typography component="h1" variant="h5">
           Create Discussion
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
+        <Box noValidate sx={{ mt: 1, pt: 1 }}>
+          {
+            message && (
+              <Alert variant="outlined" severity="warning" className="my-2">
+                {message}
+              </Alert>
+            )
+          }
           <TextField
             value={title}
             onChange={onTitleChange}
@@ -75,4 +83,5 @@ export default function AddThread({ addThread }) {
 
 AddThread.propTypes = {
   addThread: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
 };

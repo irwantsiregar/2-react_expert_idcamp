@@ -153,7 +153,6 @@ const api = (() => {
     }
 
     const { data: { thread } } = responseJson;
-
     return thread;
   }
 

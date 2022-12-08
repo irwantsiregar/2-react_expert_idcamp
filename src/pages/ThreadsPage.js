@@ -16,9 +16,9 @@ export default function ThreadsPage() {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
 
-  const onUpVote = (threadId) => dispatch(asyncUpVoteThread(threadId));
+  const onUpVoteThread = (threadId) => dispatch(asyncUpVoteThread(threadId));
 
-  const onDownVote = (threadId) => dispatch(asyncDownVoteThread(threadId));
+  const onDownVoteThread = (threadId) => dispatch(asyncDownVoteThread(threadId));
 
   // eslint-disable-next-line no-shadow
   const onKeywordChangeHandler = (keyword) => {
@@ -33,6 +33,6 @@ export default function ThreadsPage() {
   })).filter((thread) => (thread.title.toLowerCase().includes(keyword.toLowerCase())));
 
   return (
-    <ThreadList threads={threadsList} upvote={onUpVote} downvote={onDownVote} keyword={keyword} keywordChange={onKeywordChangeHandler} />
+    <ThreadList threads={threadsList} upvoteThread={onUpVoteThread} downvoteThread={onDownVoteThread} keyword={keyword} keywordChange={onKeywordChangeHandler} />
   );
 }

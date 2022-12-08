@@ -62,14 +62,13 @@ function asyncReceiveThreads() {
 
 function asyncAddThread({ title, body, category }) {
   return async (dispatch) => {
-    dispatch(showLoading());
     try {
       const thread = await api.postThread({ title, body, category });
       dispatch(addThreadActionCreator(thread));
+      return thread;
     } catch (error) {
-      error;
+      return error;
     }
-    dispatch(hideLoading());
   };
 }
 
@@ -79,9 +78,9 @@ function asyncUpVoteThread(threadId) {
     const { authUser, threads } = getState();
     dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
     try {
-      threads.map((thread) => {
-        const vote = thread.upVotesBy.includes(authUser.id) || thread.downVotesBy.includes(authUser.id);
-        vote ? api.postNeutralVoteThread(threadId) : api.postUpVoteThread(threadId);
+      threads.map(({ upVotesBy, downVotesBy }) => {
+        const voteThread = upVotesBy.includes(authUser.id) || downVotesBy.includes(authUser.id);
+        voteThread ? api.postNeutralVoteThread(threadId) : api.postUpVoteThread(threadId);
       });
     } catch (error) {
       dispatch(upVoteThreadActionCreator({ threadId, userId: authUser.id }));
@@ -96,9 +95,9 @@ function asyncDownVoteThread(threadId) {
     const { authUser, threads } = getState();
     dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));
     try {
-      threads.map((thread) => {
-        const vote = thread.downVotesBy.includes(authUser.id) || thread.upVotesBy.includes(authUser.id);
-        vote ? api.postNeutralVoteThread(threadId) : api.postDownVoteThread(threadId);
+      threads.map(({ upVotesBy, downVotesBy }) => {
+        const voteThread = downVotesBy.includes(authUser.id) || upVotesBy.includes(authUser.id);
+        voteThread ? api.postNeutralVoteThread(threadId) : api.postDownVoteThread(threadId);
       });
     } catch (error) {
       dispatch(downVoteThreadActionCreator({ threadId, userId: authUser.id }));

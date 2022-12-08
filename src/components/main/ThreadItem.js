@@ -13,6 +13,7 @@ import { red } from '@mui/material/colors';
 import Link from '@mui/material/Link';
 import { postedAt } from '../../utils/FormatPostedAt';
 import Modal from './Modal';
+import useModal from '../../hooks/useModal';
 
 const theme = createTheme({
   components: {
@@ -31,27 +32,27 @@ const theme = createTheme({
 });
 
 export default function ThreadItem({
-  id, title, body, category, createdAt, upVotesBy, downVotesBy, totalComments, user, authUser, upvote, downvote,
+  id, title, body, category, createdAt, upVotesBy, downVotesBy,
+  totalComments, user, authUser, upvoteThread, downvoteThread,
 }) {
-  const [open, setOpenModal] = React.useState(false);
-  const handleCloseModal = () => setOpenModal(false);
+  const [openModal, onModalChange] = useModal(false);
 
   const isThreadUpVote = authUser ? upVotesBy.includes(authUser.id) : false;
   const isThreadDownVote = authUser ? downVotesBy.includes(authUser.id) : false;
 
-  const onUpVoteClick = (event) => {
+  const onUpVoteThreadClick = (event) => {
     event.stopPropagation();
-    (!authUser) ? setOpenModal(true) : upvote(id);
+    (!authUser) ? onModalChange(true) : upvoteThread(id);
   };
 
-  const onDownVoteClick = (event) => {
+  const onDownVoteThreadClick = (event) => {
     event.stopPropagation();
-    (!authUser) ? setOpenModal(true) : downvote(id);
+    (!authUser) ? onModalChange(true) : downvoteThread(id);
   };
 
   return (
     <>
-      <Modal open={open} handleClose={handleCloseModal} />
+      <Modal open={openModal} handleClose={() => onModalChange(false)} />
       <Box className="w-full p-4 md:w-1/2 lg:w-1/3">
         <Card className="text-2xl">
           <ThemeProvider theme={theme}>
@@ -92,13 +93,13 @@ export default function ThreadItem({
               </IconButton>
             </Box>
             <Box className="flex w-1/2 justify-end pr-4">
-              <IconButton onClick={onDownVoteClick} aria-label="disliked thread">
+              <IconButton onClick={onDownVoteThreadClick} aria-label="disliked thread">
                 <ThumbDownOffAltIcon className={isThreadDownVote ? 'text-red-500' : ''} />
               </IconButton>
               <Typography className="py-2 pr-2" variant="body2" color="text.secondary">
                 {downVotesBy.length}
               </Typography>
-              <IconButton onClick={onUpVoteClick} aria-label="liked thread" component="p" title="35">
+              <IconButton onClick={onUpVoteThreadClick} aria-label="liked thread" component="p" title="35">
                 <ThumbUpOffAltIcon className={isThreadUpVote ? 'text-blue-500' : ''} />
               </IconButton>
               <Typography className="py-2" variant="body2" color="text.secondary">
@@ -121,7 +122,7 @@ ThreadItem.propTypes = {
   downVotesBy: PropTypes.array.isRequired,
   totalComments: PropTypes.number.isRequired,
   user: PropTypes.object.isRequired,
-  upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired,
+  upvoteThread: PropTypes.func.isRequired,
+  downvoteThread: PropTypes.func.isRequired,
   authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
 };

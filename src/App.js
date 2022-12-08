@@ -69,12 +69,11 @@ export default function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/" element={<ThreadsPage />} />
+          <Route path="/*" element={<ThreadsPage />} />
           <Route path="/standings" element={<LeaderBoardsPage />} />
           <Route path="/thread/:id" element={<DetailThreadPage />} />
           <Route path="/add-thread" element={<AddThreadPage />} />
           <Route path={`/${authUser.name.toLowerCase().split(' ').join('-')}`} element={<MyProfilPage />} />
-          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </main>
       <footer>

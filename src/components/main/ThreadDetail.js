@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import parse from 'html-react-parser';
 import {
-  CssBaseline, Container, Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography, TextField,
-  Button, Box, Link, Divider,
+  CssBaseline, Container, Card, CardHeader, CardContent, CardActions,
+  Avatar, IconButton, Typography, TextField, Alert, Button, Box, Link, Divider,
 } from '@mui/material';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
@@ -14,6 +14,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { postedAt } from '../../utils/FormatPostedAt';
 import CommentThread from './CommentThread';
 import useInput from '../../hooks/useInput';
+import useModal from '../../hooks/useModal';
+import Modal from './Modal';
 
 const theme = createTheme({
   components: {
@@ -32,12 +34,28 @@ const theme = createTheme({
 });
 
 export default function ThreadDetail({
-  title, body, category, createdAt, owner, upVotesBy, downVotesBy, comments, authUser, addComment,
+  id, title, body, category, createdAt, owner, message,
+  upVotesBy, downVotesBy, comments, authUser, addComment, vote,
 }) {
   const [content, onContentCommentChange] = useInput('');
+  const [openModal, onModalChange] = useModal(false);
+
+  const isThreadUpVote = authUser ? upVotesBy.includes(authUser.id) : false;
+  const isThreadDownVote = authUser ? downVotesBy.includes(authUser.id) : false;
+
+  const onUpVoteThreadClick = (event) => {
+    event.stopPropagation();
+    (!authUser) ? onModalChange(true) : vote.upVoteThread(id);
+  };
+
+  const onDownVoteThreadClick = (event) => {
+    event.stopPropagation();
+    (!authUser) ? onModalChange(true) : vote.downVoteThread(id);
+  };
 
   return (
     <>
+      <Modal open={openModal} handleClose={() => onModalChange(false)} />
       <CssBaseline />
       <Container maxWidth="lg" className="min-h-screen lg:border-x-2 border-solid border-slate-300">
         <Box className="flex flex-col items-center pb-24 pt-2 md:pb-32">
@@ -79,14 +97,14 @@ export default function ThreadDetail({
                   </IconButton>
                 </Box>
                 <Box className="flex w-1/2 justify-end pr-4">
-                  <IconButton aria-label="disliked thread">
-                    <ThumbDownOffAltIcon className="text-red-500" />
+                  <IconButton onClick={onDownVoteThreadClick} aria-label="disliked thread">
+                    <ThumbDownOffAltIcon className={isThreadDownVote ? 'text-red-500' : ''} />
                   </IconButton>
                   <Typography className="py-2 pr-2" variant="body2" color="text.secondary">
                     {downVotesBy.length}
                   </Typography>
-                  <IconButton aria-label="liked thread" component="p" title="35">
-                    <ThumbUpOffAltIcon className="text-blue-500" />
+                  <IconButton onClick={onUpVoteThreadClick} aria-label="liked thread" component="p" title="35">
+                    <ThumbUpOffAltIcon className={isThreadUpVote ? 'text-blue-500' : ''} />
                   </IconButton>
                   <Typography className="py-2" variant="body2" color="text.secondary">
                     {upVotesBy.length}
@@ -110,6 +128,13 @@ export default function ThreadDetail({
                     sx={{ pb: 0 }}
                   />
                   <Box component="form" noValidate className="w-full">
+                    {
+                      message && (
+                        <Alert variant="outlined" severity="warning" className="mt-5 mb-1">
+                          {message}
+                        </Alert>
+                      )
+                    }
                     <TextField
                       value={content}
                       onChange={onContentCommentChange}
@@ -140,7 +165,7 @@ export default function ThreadDetail({
               ) : (
                 <Card>
                   <Box className="bg-slate-50 p-2 text-center">
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary">
                       Please login to add a comment.
                       {' '}
                       <Link href="/login" underline="none">
@@ -154,9 +179,14 @@ export default function ThreadDetail({
             {/* End Add Comments */}
             <Divider sx={{ my: 5 }} />
             {
-              comments.map((comment) => (
-                <CommentThread key={comment.id} {...comment} />
-              ))
+              (!(comments.length)) ? (
+                <Alert variant="outlined" severity="info">
+                  No comments have been added yet
+                </Alert>
+              )
+                : comments.map((comment) => (
+                  <CommentThread key={comment.id} authUser={authUser} threadId={id} {...comment} vote={vote} />
+                ))
             }
           </Box>
         </Box>
@@ -166,6 +196,7 @@ export default function ThreadDetail({
 }
 
 ThreadDetail.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
@@ -173,7 +204,9 @@ ThreadDetail.propTypes = {
   owner: PropTypes.object.isRequired,
   upVotesBy: PropTypes.array.isRequired,
   downVotesBy: PropTypes.array.isRequired,
-  addComment: PropTypes.func.isRequired,
   comments: PropTypes.array.isRequired,
   authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
+  addComment: PropTypes.func.isRequired,
+  vote: PropTypes.objectOf(PropTypes.func.isRequired),
+  message: PropTypes.string.isRequired,
 };

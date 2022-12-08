@@ -1,11 +1,13 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { CssBaseline, Box, Container } from '@mui/material';
+import {
+  CssBaseline, Box, Container, Alert,
+} from '@mui/material';
 import ThreadItem from './ThreadItem';
 import SearchInput from './SearchInput';
 
 export default function ThreadList({
-  threads, upvote, downvote, keyword, keywordChange,
+  threads, upvoteThread, downvoteThread, keyword, keywordChange,
 }) {
   return (
     <>
@@ -14,13 +16,25 @@ export default function ThreadList({
         <Box className="flex justify-end p-4">
           <SearchInput keyword={keyword} keywordChange={keywordChange} />
         </Box>
-        <Box className="md:flex flex-wrap pb-24 md:pb-32">
-          {
-            threads.map((thread) => (
-              <ThreadItem key={thread.id} {...thread} upvote={upvote} downvote={downvote} />
-            ))
-          }
-        </Box>
+        {
+          (!(threads.length))
+            ? (
+              <Box className="md:flex flex-wrap justify-center py-48 px-4">
+                <Alert variant="outlined" severity="info">
+                  There are no available threads yet
+                </Alert>
+              </Box>
+            )
+            : (
+              <Box className="md:flex flex-wrap pb-24 md:pb-32">
+                {
+                  threads.map((thread) => (
+                    <ThreadItem key={thread.id} {...thread} upvoteThread={upvoteThread} downvoteThread={downvoteThread} />
+                  ))
+                }
+              </Box>
+            )
+        }
       </Container>
     </>
   );
@@ -28,8 +42,8 @@ export default function ThreadList({
 
 ThreadList.propTypes = {
   threads: PropTypes.array.isRequired,
-  upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired,
+  upvoteThread: PropTypes.func.isRequired,
+  downvoteThread: PropTypes.func.isRequired,
   keywordChange: PropTypes.func.isRequired,
   keyword: PropTypes.string.isRequired,
 };

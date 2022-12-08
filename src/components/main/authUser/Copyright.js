@@ -6,11 +6,10 @@ export default function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="/" underline="hover">
-        LA2 Giganoto
+        Giganotoe
       </Link>
       {' '}
       {new Date().getFullYear()}
-      .
     </Typography>
   );
 }

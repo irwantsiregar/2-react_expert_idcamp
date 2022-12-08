@@ -1,7 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Grid, Box, Typography, Link, Container, TextField, CssBaseline, Avatar, Button, Alert,
+  Grid, Box, Typography, Link, Container, TextField,
+  CssBaseline, Avatar, Button, Alert,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -32,7 +33,7 @@ export default function LoginInput({ login, message }) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box noValidate sx={{ mt: 1 }}>
             {
               message && (
                 <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
