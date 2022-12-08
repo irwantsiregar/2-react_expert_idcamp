@@ -57,9 +57,7 @@ export default function ThreadItem({
           <ThemeProvider theme={theme}>
             <CardHeader
               avatar={(
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  {user.avatar}
-                </Avatar>
+                <Avatar src={user.avatar} alt={user.name} sx={{ bgcolor: red[500] }} aria-label="recipe" />
               )}
               title={user.name}
               subheader={postedAt(createdAt)}
@@ -125,5 +123,5 @@ ThreadItem.propTypes = {
   user: PropTypes.object.isRequired,
   upvote: PropTypes.func.isRequired,
   downvote: PropTypes.func.isRequired,
-  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.string.isRequired]),
+  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
 };

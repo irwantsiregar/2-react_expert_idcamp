@@ -46,9 +46,7 @@ export default function ThreadDetail({
               <ThemeProvider theme={theme}>
                 <CardHeader
                   avatar={(
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                      {owner.avatar}
-                    </Avatar>
+                    <Avatar src={owner.avatar} alt={owner.name} sx={{ bgcolor: red[500] }} aria-label="recipe" />
                   )}
                   title={owner.name}
                   subheader={postedAt(createdAt)}
@@ -104,7 +102,7 @@ export default function ThreadDetail({
                   <CardHeader
                     avatar={(
                       <Avatar sx={{ bgcolor: red[500], width: 34, height: 34 }} aria-label="recipe">
-                        {authUser.avatar}
+                        <img src={authUser.avatar} alt={authUser.name} />
                       </Avatar>
                     )}
                     title={authUser.name}
@@ -177,5 +175,5 @@ ThreadDetail.propTypes = {
   downVotesBy: PropTypes.array.isRequired,
   addComment: PropTypes.func.isRequired,
   comments: PropTypes.array.isRequired,
-  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.string.isRequired]),
+  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
 };

@@ -17,9 +17,7 @@ export default function CommentThread({
     <Card className="text-2xl" sx={{ px: { md: 4 }, py: { md: 2 }, mb: 4 }}>
       <CardHeader
         avatar={(
-          <Avatar sx={{ bgcolor: red[500], width: 34, height: 34 }} aria-label="recipe">
-            {owner.avatar}
-          </Avatar>
+          <Avatar src={owner.avatar} alt={owner.name} sx={{ bgcolor: red[500], width: 34, height: 34 }} aria-label="recipe" />
         )}
         title={owner.name}
         subheader={postedAt(createdAt)}
