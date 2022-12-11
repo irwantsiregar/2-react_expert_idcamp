@@ -2,9 +2,13 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Drawer } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Filter from './Filter';
+import Filter from './Filters';
 
-export default function TemporaryDrawer({ toggleDrawer, anchor, drawer }) {
+export default function TemporaryDrawer({
+  threads, toggleDrawer, anchor, drawer,
+  category, categoryChange,
+  timePosted, timePostedChange,
+}) {
   const list = () => (
     <Box
       sx={{ maxWidth: { xs: 'auto', sm: 500 } }}
@@ -14,7 +18,13 @@ export default function TemporaryDrawer({ toggleDrawer, anchor, drawer }) {
       <Box className="flex justify-end pr-4">
         <CloseIcon onClick={toggleDrawer} />
       </Box>
-      <Filter />
+      <Filter
+        threads={threads}
+        category={category}
+        categoryChange={categoryChange}
+        timePosted={timePosted}
+        timePostedChange={timePostedChange}
+      />
     </Box>
   );
 

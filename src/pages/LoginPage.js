@@ -15,6 +15,9 @@ export default function LoginPage() {
   };
 
   return (
-    <LoginInput login={onLogin} message={message} />
+    <LoginInput
+      login={onLogin}
+      message={message}
+    />
   );
 }

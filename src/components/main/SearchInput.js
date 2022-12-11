@@ -48,7 +48,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchInput({ keyword, keywordChange }) {
+export default function SearchInput({
+  keyword, keywordChange, threads,
+  category, categoryChange,
+  timePosted, timePostedChange,
+}) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -79,7 +83,16 @@ export default function SearchInput({ keyword, keywordChange }) {
       <IconButton onClick={toggleDrawer(drawerPosition, true)} sx={{ ml: 1 }}>
         <TuneIcon />
       </IconButton>
-      <TemporaryDrawer toggleDrawer={toggleDrawer(drawerPosition, false)} anchor={drawerPosition} drawer={state[drawerPosition]} />
+      <TemporaryDrawer
+        threads={threads}
+        category={category}
+        categoryChange={categoryChange}
+        timePosted={timePosted}
+        timePostedChange={timePostedChange}
+        drawer={state[drawerPosition]}
+        anchor={drawerPosition}
+        toggleDrawer={toggleDrawer(drawerPosition, false)}
+      />
     </Toolbar>
   );
 }

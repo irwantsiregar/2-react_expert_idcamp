@@ -45,6 +45,12 @@ export default function ThreadsPage() {
   }
 
   return (
-    <ThreadDetail authUser={authUser} {...threadDetail} addComment={commentThread} vote={vote} message={message} />
+    <ThreadDetail
+      {...threadDetail}
+      authUser={authUser}
+      vote={vote}
+      message={message}
+      addComment={commentThread}
+    />
   );
 }

@@ -16,11 +16,13 @@ export default function AddThreadPage() {
 
   const onAddThread = async ({ title, body, category }) => {
     const response = await dispatch(asyncAddThread({ title, body, category }));
-    console.log(response);
     (response.message) ? setMessage(response.message) : navigate('/');
   };
 
   return (
-    <AddThread addThread={onAddThread} message={message} />
+    <AddThread
+      message={message}
+      addThread={onAddThread}
+    />
   );
 }
