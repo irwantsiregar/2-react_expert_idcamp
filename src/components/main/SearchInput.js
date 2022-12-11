@@ -34,15 +34,15 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
+    padding: theme.spacing(1.2, 1.2, 1.2, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      width: '16ch',
+      width: '8ch',
       '&:focus': {
-        width: '25ch',
+        width: '22ch',
       },
     },
   },
@@ -70,8 +70,12 @@ export default function SearchInput({
   };
 
   return (
-    <Toolbar className="w-full md:w-1/4 justify-end rounded-md shadow-lg bg-[#FEFEFE]">
-      <Search value={keyword} onChange={(event) => keywordChange(event.target.value)}>
+    <Toolbar className="w-full md:w-1/3 justify-end">
+      <Search
+        value={keyword}
+        onChange={(event) => keywordChange(event.target.value)}
+        className="rounded-md shadow-lg bg-[#FEFEFE] border border-slate-100"
+      >
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>

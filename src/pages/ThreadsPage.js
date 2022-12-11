@@ -10,7 +10,7 @@ export default function ThreadsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = React.useState(() => searchParams.get('keyword') || '');
   const [category, setCategory] = React.useState(() => searchParams.get('category') || '');
-  const [timePosted, setTimePosted] = React.useState(() => searchParams.get('timePosted') || 'latest');
+  const [timePosted, setTimePosted] = React.useState(() => searchParams.get('timePosted') || '');
 
   const { threads = [], users = [], authUser = null } = useSelector((states) => states);
   const dispatch = useDispatch();
@@ -59,9 +59,9 @@ export default function ThreadsPage() {
       keyword={keyword}
       category={category}
       timePosted={timePosted}
-      timePostedChange={onTimePostedChangeHandler}
       keywordChange={onKeywordChangeHandler}
       categoryChange={onCategoryChangeHandler}
+      timePostedChange={onTimePostedChangeHandler}
     />
   );
 }

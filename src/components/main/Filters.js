@@ -22,8 +22,8 @@ export default function Filters({
         <FormControlLabel value="latest" control={<Radio />} label="Latest" />
         <FormControlLabel value="longest" control={<Radio />} label="Longest" />
         <Divider sx={{ my: 2 }} />
-        <FormControlLabel value="complete" control={<Radio />} label="Discussion is complete" />
-        <FormControlLabel value="incomplete" control={<Radio />} label="Discussion isn't complete" />
+        <FormControlLabel disabled control={<Radio />} label="Discussion is complete" />
+        <FormControlLabel disabled control={<Radio />} label="Discussion isn't complete" />
       </RadioGroup>
       <Divider sx={{ my: 3 }} />
       <FormLabel sx={{ mb: 3 }} id="demo-controlled-radio-buttons-group">Categories</FormLabel>
