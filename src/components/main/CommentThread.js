@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import parse from 'html-react-parser';
 import {
   Card, CardHeader, CardContent, CardActions, Avatar, IconButton, Typography, Box,
 } from '@mui/material';
@@ -8,9 +7,10 @@ import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbDownOffAltIcon from '@mui/icons-material/ThumbDownOffAlt';
 import ShareIcon from '@mui/icons-material/Share';
 import { red } from '@mui/material/colors';
-import { postedAt } from '../../utils/FormatPostedAt';
 import Modal from './Modal';
 import useModal from '../../hooks/useModal';
+import BlockAccess from './BlockAccess';
+import { postedAt } from '../../utils/FormatPostedAt';
 
 export default function CommentThread({
   threadId, id, content, createdAt, owner, upVotesBy, downVotesBy, authUser, vote,
@@ -32,7 +32,9 @@ export default function CommentThread({
 
   return (
     <>
-      <Modal open={openModal} handleClose={() => onModalChange(false)} />
+      <Modal open={openModal} handleClose={() => onModalChange(false)}>
+        <BlockAccess />
+      </Modal>
       <Card className="text-2xl" sx={{ px: { md: 4 }, py: { md: 2 }, mb: 4 }}>
         <CardHeader
           avatar={(

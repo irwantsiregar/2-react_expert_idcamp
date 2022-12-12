@@ -19,10 +19,8 @@ export default function ThreadsPage() {
 
   const commentThread = async (content) => {
     const response = await dispatch(asyncAddCommentThread({ id, content }));
-    console.log(response);
-    if (response.message) {
-      setMessage(response.message);
-    }
+    // eslint-disable-next-line no-restricted-globals
+    (response.message) ? setMessage(response.message) : history.go();
   };
 
   const onUpVoteThread = (threadId) => dispatch(asyncUpVoteThread(threadId));

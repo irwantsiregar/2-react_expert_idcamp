@@ -1,13 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-// import LoginInput from './authUser/LoginInput';
+import { Typography, Modal, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { Close } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
@@ -19,8 +13,7 @@ const style = {
   boxShadow: 24,
 };
 
-export default function Modals({ open, handleClose }) {
-  const noname = (_) => _;
+export default function ModalCustom({ open, handleClose, children }) {
   return (
     <Modal
       open={open}
@@ -28,29 +21,18 @@ export default function Modals({ open, handleClose }) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Stack sx={style} className="border border-blue-300 rounded-lg">
-        <Typography id="button-close" className="pr-2 pt-1 text-right">
+      <Stack sx={style} className="border border-blue-400 rounded-lg">
+        <Typography id="button-close" className="pr-3 pt-2 text-right">
           <CloseIcon onClick={handleClose} className="hover:cursor-pointer" />
         </Typography>
-        <Box className="px-8 pb-6">
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Uppsss !!
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            You are not logged in. Please login to get service access.
-            {' '}
-            <Link href="/login">Click here</Link>
-          </Typography>
-        </Box>
-        {/* <Box sx={style} className="border border-blue-300 bg-slate-200 rounded-lg">
-        <LoginInput login={noname} message="" />
-      </Box> */}
+        {children}
       </Stack>
     </Modal>
   );
 }
 
-Modals.propTypes = {
+ModalCustom.propTypes = {
   handleClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  children: PropTypes.object,
 };

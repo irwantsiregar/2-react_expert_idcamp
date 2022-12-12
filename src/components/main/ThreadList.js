@@ -47,6 +47,10 @@ ThreadList.propTypes = {
   threads: PropTypes.array.isRequired,
   upvoteThread: PropTypes.func.isRequired,
   downvoteThread: PropTypes.func.isRequired,
-  keywordChange: PropTypes.func.isRequired,
   keyword: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  timePosted: PropTypes.string.isRequired,
+  keywordChange: PropTypes.func.isRequired,
+  categoryChange: PropTypes.func.isRequired,
+  timePostedChange: PropTypes.func.isRequired,
 };

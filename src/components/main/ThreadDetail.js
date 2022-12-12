@@ -16,6 +16,7 @@ import CommentThread from './CommentThread';
 import useInput from '../../hooks/useInput';
 import useModal from '../../hooks/useModal';
 import Modal from './Modal';
+import BlockAccess from './BlockAccess';
 
 const theme = createTheme({
   components: {
@@ -55,7 +56,9 @@ export default function ThreadDetail({
 
   return (
     <>
-      <Modal open={openModal} handleClose={() => onModalChange(false)} />
+      <Modal open={openModal} handleClose={() => onModalChange(false)}>
+        <BlockAccess />
+      </Modal>
       <CssBaseline />
       <Container maxWidth="lg" className="min-h-screen lg:border-x-2 border-solid border-slate-300">
         <Box className="flex flex-col items-center pb-24 pt-2 md:pb-32">
@@ -127,7 +130,7 @@ export default function ThreadDetail({
                     className="text-slate-600"
                     sx={{ pb: 0 }}
                   />
-                  <Box component="form" noValidate className="w-full">
+                  <Box noValidate className="w-full">
                     {
                       message && (
                         <Alert variant="outlined" severity="warning" className="mt-5 mb-1">
@@ -165,12 +168,8 @@ export default function ThreadDetail({
               ) : (
                 <Card>
                   <Box className="bg-slate-50 p-2 text-center">
-                    <Typography variant="body2" color="text.secondary">
-                      Please login to add a comment.
-                      {' '}
-                      <Link href="/login" underline="none">
-                        Click here
-                      </Link>
+                    <Typography variant="body2" className="text-slate-700">
+                      Please login to add a comment. Click the sign in button on the navbar above.
                     </Typography>
                   </Box>
                 </Card>

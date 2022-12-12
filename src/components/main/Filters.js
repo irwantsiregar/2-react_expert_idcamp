@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import {
   Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Divider,
 } from '@mui/material';
@@ -37,3 +38,11 @@ export default function Filters({
     </FormControl>
   );
 }
+
+Filters.propTypes = {
+  timePostedChange: PropTypes.func.isRequired,
+  categoryChange: PropTypes.func.isRequired,
+  timePosted: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  threads: PropTypes.array.isRequired,
+};

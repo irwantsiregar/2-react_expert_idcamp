@@ -9,8 +9,7 @@ import {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    color: theme.palette.common.black,
     fontSize: 18,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -36,7 +35,7 @@ export default function LeaderBoards({ leaderboards }) {
         <Box className="border-2 border-solid border-slate-300 rounded-md mb-[5.5rem]">
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 200 }} aria-label="customized table">
-              <TableHead>
+              <TableHead className="bg-slate-50">
                 <TableRow>
                   <StyledTableCell>Rank.</StyledTableCell>
                   <StyledTableCell>Leading User</StyledTableCell>

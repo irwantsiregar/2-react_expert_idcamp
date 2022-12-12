@@ -13,6 +13,7 @@ import { red } from '@mui/material/colors';
 import Link from '@mui/material/Link';
 import { postedAt } from '../../utils/FormatPostedAt';
 import Modal from './Modal';
+import BlockAccess from './BlockAccess';
 import useModal from '../../hooks/useModal';
 
 const theme = createTheme({
@@ -52,7 +53,9 @@ export default function ThreadItem({
 
   return (
     <>
-      <Modal open={openModal} handleClose={() => onModalChange(false)} />
+      <Modal open={openModal} handleClose={() => onModalChange(false)}>
+        <BlockAccess />
+      </Modal>
       <Box className="w-full p-4 md:w-1/2 lg:w-1/3">
         <Card className="text-2xl">
           <ThemeProvider theme={theme}>
@@ -76,7 +79,7 @@ export default function ThreadItem({
             </Typography>
             <Box className="mt-2 p-2 flex">
               <Typography variant="body1" color="text.secondary" className="w-auto rounded-md px-1 mr-2 border border-solid border-blue-300">
-                {category}
+                {`#${category}`}
               </Typography>
             </Box>
           </CardContent>
@@ -117,6 +120,7 @@ ThreadItem.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   upVotesBy: PropTypes.array.isRequired,
   downVotesBy: PropTypes.array.isRequired,

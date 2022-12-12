@@ -104,4 +104,9 @@ export default function SearchInput({
 SearchInput.propTypes = {
   keywordChange: PropTypes.func.isRequired,
   keyword: PropTypes.string.isRequired,
+  timePostedChange: PropTypes.func.isRequired,
+  categoryChange: PropTypes.func.isRequired,
+  timePosted: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  threads: PropTypes.array.isRequired,
 };

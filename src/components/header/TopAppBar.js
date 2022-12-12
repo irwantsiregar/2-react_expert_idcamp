@@ -12,6 +12,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { styled } from '@mui/material/styles';
 import ToggleTheme from '../ToggleTheme';
+import Modal from '../main/Modal';
+import LoginInput from '../main/authUser/LoginInput';
+import useModal from '../../hooks/useModal';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -42,19 +45,28 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function TopAppBar({ authUser, logOut }) {
+export default function TopAppBar({
+  authUser, logOut, login, message,
+}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [openModal, onModalChange] = useModal(false);
+
+  const handleCloseNavMenuOpenModal = () => {
+    onModalChange(true);
+    setAnchorElNav(null);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseUserMenu = () => {
@@ -101,7 +113,7 @@ export default function TopAppBar({ authUser, logOut }) {
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
-            Logout
+            Sign Out
           </MenuItem>
         </Menu>
       </Box>
@@ -111,15 +123,16 @@ export default function TopAppBar({ authUser, logOut }) {
 
   const renderBeforeLogin = () => (
     <>
+      <Modal open={openModal} handleClose={() => onModalChange(false)}>
+        <LoginInput login={login} message={message} />
+      </Modal>
       <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-        <Link href="/login" underline="none">
-          <Button variant="outlined" color="primary" sx={{ mr: 2 }}>
-            LOGIN
-          </Button>
-        </Link>
+        <Button onClick={() => onModalChange(true)} variant="outlined" color="primary" sx={{ mr: 2 }}>
+          SIGN IN
+        </Button>
         <Link href="/register" underline="none">
           <Button variant="contained" color="primary">
-            REGISTER
+            SIGN UP
           </Button>
         </Link>
       </Box>
@@ -152,17 +165,17 @@ export default function TopAppBar({ authUser, logOut }) {
             display: { xs: 'block', md: 'none' },
           }}
         >
-          <MenuItem component="a" href="/login" onClick={handleCloseUserMenu}>
+          <MenuItem onClick={handleCloseNavMenuOpenModal}>
             <ListItemIcon>
               <LoginIcon />
             </ListItemIcon>
-            Login
+            Sign In
           </MenuItem>
           <MenuItem component="a" href="/register" onClick={handleCloseUserMenu}>
             <ListItemIcon>
               <HowToRegIcon />
             </ListItemIcon>
-            Register
+            Sign Up
           </MenuItem>
         </Menu>
       </Box>
@@ -170,7 +183,7 @@ export default function TopAppBar({ authUser, logOut }) {
   );
 
   return (
-    <AppBar sx={{ bgcolor: '#f8fafc' }} position="static">
+    <AppBar sx={{ bgcolor: '#f8fafc' }} position="static" className="bg-dark">
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <ControlCameraIcon className="text-blue-500 bg-slate-50 mr-1 rounded-lg" />
@@ -200,3 +213,10 @@ export default function TopAppBar({ authUser, logOut }) {
     </AppBar>
   );
 }
+
+TopAppBar.propTypes = {
+  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
+  logOut: PropTypes.func,
+  login: PropTypes.func,
+  message: PropTypes.string,
+};

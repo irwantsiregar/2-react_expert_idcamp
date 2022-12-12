@@ -43,6 +43,11 @@ export default function TemporaryDrawer({
 
 TemporaryDrawer.propTypes = {
   toggleDrawer: PropTypes.func.isRequired,
+  timePostedChange: PropTypes.func.isRequired,
+  categoryChange: PropTypes.func.isRequired,
+  timePosted: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  threads: PropTypes.array.isRequired,
   drawer: PropTypes.bool.isRequired,
   anchor: PropTypes.string.isRequired,
 };

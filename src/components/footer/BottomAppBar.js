@@ -51,3 +51,7 @@ export default function BottomAppBar({ authUser }) {
     </>
   );
 }
+
+BottomAppBar.propTypes = {
+  authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
+};
