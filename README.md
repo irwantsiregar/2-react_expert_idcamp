@@ -1,10 +1,10 @@
-`react` `idcamp-2022`
+`idcamp-2022` `react` `redux` 
 
 # Become React Web Developer Expert
 
 - Linter dan Clean Code
 - State Management dengan Redux
-  - Submission 1: Membangun Aplikasi React dengan Redux
+  - Submission 1: Membangun Aplikasi React dengan Redux - Forum App
 - Automation Testing
 - Deployment dengan CI/CD
 - React Useful Ecosystem
