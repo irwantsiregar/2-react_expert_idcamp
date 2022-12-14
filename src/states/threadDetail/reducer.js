@@ -4,8 +4,6 @@ function threadDetailReducer(threadDetail = null, action = {}) {
   switch (action.type) {
     case ActionType.RECEIVE_THREAD_DETAIL:
       return action.payload.threadDetail;
-    case ActionType.CLEAR_TALK_DETAIL:
-      return null;
     case ActionType.UPVOTE_DETAIL_THREAD:
       return (threadDetail.upVotesBy.includes(action.payload.userId) || threadDetail.downVotesBy.includes(action.payload.userId))
         ? {

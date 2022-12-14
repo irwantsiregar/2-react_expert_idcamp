@@ -5,9 +5,8 @@ import api from '../../utils/api';
 const ActionType = {
   RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
   ADD_COMMENT_THREAD: 'ADD_COMMENT_THREAD',
-  CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
   UPVOTE_DETAIL_THREAD: 'UPVOTE_DETAIL_THREAD',
-  DOWNVOTE_DETAIL_THREAD: 'DOWNVOTE_DETAIL_HREAD',
+  DOWNVOTE_DETAIL_THREAD: 'DOWNVOTE_DETAIL_THREAD',
   UPVOTE_COMMENT_THREAD: 'UPVOTE_COMMENT_THREAD',
   DOWNVOTE_COMMENT_THREAD: 'DOWNVOTE_COMMENT_THREAD',
 };
@@ -27,12 +26,6 @@ function addCommentThreadActionCreator(commentThread) {
     payload: {
       commentThread,
     },
-  };
-}
-
-function clearThreadDetailActionCreator() {
-  return {
-    type: ActionType.CLEAR_THREAD_DETAIL,
   };
 }
 
@@ -175,7 +168,6 @@ export {
   ActionType,
   receiveThreadDetailActionCreator,
   addCommentThreadActionCreator,
-  clearThreadDetailActionCreator,
   upVoteThreadActionCreator,
   downVoteThreadActionCreator,
   upVoteCommentThreadActionCreator,
