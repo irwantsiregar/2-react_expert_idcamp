@@ -13,7 +13,7 @@ function asyncPopulateUsersAndThreads() {
       dispatch(receiveUsersActionCreator(users));
       dispatch(receiveThreadsActionCreator(threads));
     } catch (error) {
-      error;
+      alert(error.message);
     }
     dispatch(hideLoading());
   };
