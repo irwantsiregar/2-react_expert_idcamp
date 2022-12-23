@@ -216,7 +216,7 @@ export default function TopAppBar({
 
 TopAppBar.propTypes = {
   authUser: PropTypes.oneOfType([PropTypes.number.isRequired, PropTypes.object.isRequired]),
-  logOut: PropTypes.func,
-  login: PropTypes.func,
+  logOut: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
   message: PropTypes.string,
 };

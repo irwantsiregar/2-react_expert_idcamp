@@ -40,7 +40,7 @@ export default function BottomAppBar({ authUser }) {
               ) : ''
             }
             <Box sx={{ flexGrow: 1 }} />
-            <IconButton>
+            <IconButton aria-label="leaderboards">
               <Link href="/standings" underline="none">
                 <LeaderboardIcon sx={{ color: '#3b82f6' }} fontSize="large" />
               </Link>

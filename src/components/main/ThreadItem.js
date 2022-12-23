@@ -57,7 +57,7 @@ export default function ThreadItem({
         <BlockAccess />
       </Modal>
       <Box className="w-full p-4 md:w-1/2 lg:w-1/3">
-        <Card className="text-2xl">
+        <Card className="text-2xl" data-testid="card">
           <ThemeProvider theme={theme}>
             <CardHeader
               avatar={(

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
-  CssBaseline, Box, Container,
+  CssBaseline, Box, Container, Alert,
 } from '@mui/material';
 import ThreadItem from './ThreadItem';
 import SearchInput from './SearchInput';
@@ -28,14 +28,20 @@ export default function ThreadList({
         </Box>
         <Box className="md:flex flex-wrap pb-24 md:pb-32">
           {
-            threads.map((thread) => (
-              <ThreadItem
-                key={thread.id}
-                {...thread}
-                upvoteThread={upvoteThread}
-                downvoteThread={downvoteThread}
-              />
-            ))
+            threads.length
+              ? threads.map((thread) => (
+                <ThreadItem
+                  key={thread.id}
+                  {...thread}
+                  upvoteThread={upvoteThread}
+                  downvoteThread={downvoteThread}
+                />
+              ))
+              : (
+                <Alert variant="outlined" severity="info" className="mb-5 bg-blue-400">
+                  Thread not available !
+                </Alert>
+              )
           }
         </Box>
       </Container>

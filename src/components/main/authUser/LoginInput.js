@@ -34,7 +34,7 @@ export default function LoginInput({ login, message }) {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <Box noValidate sx={{ mt: 1 }}>
+          <Box noValidate sx={{ mt: 1 }} className="input-group">
             {
               message && (
                 <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
@@ -48,7 +48,8 @@ export default function LoginInput({ login, message }) {
               type="email"
               name="email"
               id="email"
-              label="Email Address"
+              label="Email"
+              placeholder="example@email.com"
               autoComplete="email"
               margin="normal"
               autoFocus
@@ -62,6 +63,7 @@ export default function LoginInput({ login, message }) {
               name="password"
               id="password"
               label="Password"
+              placeholder="your password"
               margin="normal"
               required
               fullWidth

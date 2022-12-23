@@ -53,6 +53,7 @@ export default function RegisterInput({ register, message }) {
                   name="firstName"
                   id="firstName"
                   label="First Name"
+                  placeholder="John"
                   autoFocus
                   required
                   fullWidth
@@ -64,6 +65,7 @@ export default function RegisterInput({ register, message }) {
                   onChange={onLastNameChange}
                   id="lastName"
                   name="lastName"
+                  placeholder="Doe"
                   label="Last Name"
                   fullWidth
                 />
@@ -76,6 +78,7 @@ export default function RegisterInput({ register, message }) {
                   name="email"
                   id="email"
                   label="Email Address"
+                  placeholder="example@email.com"
                   autoComplete="email"
                   required
                   fullWidth
@@ -87,6 +90,7 @@ export default function RegisterInput({ register, message }) {
                   onChange={onPasswordChange}
                   type="password"
                   name="password"
+                  placeholder="your password"
                   label="Password"
                   id="password"
                   required

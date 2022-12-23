@@ -47,7 +47,7 @@ export default function App() {
       <>
         <Loading />
         <header>
-          <TopAppBar authUser={authUser} login={onLogin} message={message} />
+          <TopAppBar authUser={authUser} login={onLogin} message={message} logOut={() => { }} />
         </header>
         <main>
           <Routes>
@@ -68,7 +68,7 @@ export default function App() {
     <>
       <Loading />
       <header>
-        <TopAppBar authUser={authUser} logOut={onLogOut} />
+        <TopAppBar authUser={authUser} logOut={onLogOut} login={() => { }} />
       </header>
       <main>
         <Routes>

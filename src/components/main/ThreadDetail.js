@@ -75,9 +75,9 @@ export default function ThreadDetail({
                 />
               </ThemeProvider>
               <CardContent sx={{ py: 0 }}>
-                <Link variant="h6" href="/thread/1234" underline="none" color="text.secondary">
+                <Typography variant="h6" href="/thread/1234" color="text.secondary">
                   {title}
-                </Link>
+                </Typography>
                 <Typography variant="body1" color="text.secondary">
                   {body}
                 </Typography>

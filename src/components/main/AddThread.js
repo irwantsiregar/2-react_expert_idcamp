@@ -37,6 +37,7 @@ export default function AddThread({ addThread, message }) {
             id="title"
             label="Title Discuss"
             margin="normal"
+            placeholder="React Redux"
             required
             fullWidth
             autoFocus
@@ -48,6 +49,7 @@ export default function AddThread({ addThread, message }) {
             id="body"
             label="Body Discuss"
             margin="normal"
+            placeholder="React Ecosystem..."
             rows={5}
             multiline
             required
@@ -60,6 +62,7 @@ export default function AddThread({ addThread, message }) {
             id="category"
             label="Category"
             margin="normal"
+            placeholder="Redux"
             required
             fullWidth
           />
