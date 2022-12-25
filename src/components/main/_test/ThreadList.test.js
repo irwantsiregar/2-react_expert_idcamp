@@ -2,7 +2,6 @@
  * skenario testing
  *
  * - ThreadList component
- *   - should display information when a thread is unavailable
  *   - should display the threads correctly
  */
 import React from 'react';
@@ -12,28 +11,6 @@ import ThreadList from '../ThreadList';
 import '@testing-library/jest-dom';
 
 describe('LoginInput component', () => {
-  it('should display information when a thread is unavailable', async () => {
-    // Arrange
-    render(<ThreadList
-      threads={[]}
-      keyword=""
-      upvoteThread={() => { }}
-      downvoteThread={() => { }}
-      keywordChange={() => { }}
-      category=""
-      categoryChange={() => { }}
-      timePosted=""
-      timePostedChange={() => { }}
-    />);
-
-    // Action
-    await screen.getByRole('alert');
-    userEvent.click(screen.getByText('Thread not available !'));
-
-    // Assert
-    expect(screen.getByRole('alert')).toBeTruthy();
-    expect(screen.getByRole('alert')).toBeInTheDocument('Thread not available !');
-  });
   it('should display the threads correctly', async () => {
     // Arrange
     const threads = [
