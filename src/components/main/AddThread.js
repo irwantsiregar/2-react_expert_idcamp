@@ -22,7 +22,7 @@ export default function AddThread({ addThread, message }) {
         <Typography component="h1" variant="h5">
           Create Discussion
         </Typography>
-        <Box noValidate sx={{ mt: 1, pt: 1 }}>
+        <Box noValidate sx={{ mt: 1, pt: 1 }} aria-label="add-thread">
           {
             message && (
               <Alert variant="outlined" severity="warning" className="my-2">

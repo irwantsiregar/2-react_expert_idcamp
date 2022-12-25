@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, MenuItem, Tooltip, Link, Button,
@@ -48,8 +48,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function TopAppBar({
   authUser, logOut, login, message,
 }) {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const [openModal, onModalChange] = useModal(false);
 
   const handleCloseNavMenuOpenModal = () => {

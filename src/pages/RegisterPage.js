@@ -11,7 +11,7 @@ export default function RegisterPage() {
 
   const onRegister = async ({ email, name, password }) => {
     const response = await dispatch(asyncRegisterUser({ email, name, password }));
-    (response.message) ? setMessage(response.message) : navigate('/login');
+    (response.message) ? setMessage(response.message) : setMessage('success');
   };
 
   return (

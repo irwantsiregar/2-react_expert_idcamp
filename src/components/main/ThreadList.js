@@ -11,6 +11,10 @@ export default function ThreadList({
   keyword, keywordChange, category, categoryChange,
   timePosted, timePostedChange,
 }) {
+  const alerNotThread = () => (
+    setTimeout(<Alert variant="outlined" severity="info" className="mb-5 bg-blue-400">Thread not available !</Alert>, 200)
+  );
+
   return (
     <>
       <CssBaseline />
@@ -28,20 +32,14 @@ export default function ThreadList({
         </Box>
         <Box className="md:flex flex-wrap pb-24 md:pb-32">
           {
-            threads.length
-              ? threads.map((thread) => (
-                <ThreadItem
-                  key={thread.id}
-                  {...thread}
-                  upvoteThread={upvoteThread}
-                  downvoteThread={downvoteThread}
-                />
-              ))
-              : (
-                <Alert variant="outlined" severity="info" className="mb-5 bg-blue-400">
-                  Thread not available !
-                </Alert>
-              )
+            threads.map((thread) => (
+              <ThreadItem
+                key={thread.id}
+                {...thread}
+                upvoteThread={upvoteThread}
+                downvoteThread={downvoteThread}
+              />
+            ))
           }
         </Box>
       </Container>

@@ -37,12 +37,24 @@ export default function RegisterInput({ register, message }) {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <Box noValidate sx={{ mt: 3 }}>
+          <Box noValidate sx={{ mt: 3 }} aria-label="sign-up">
             {
               message && (
-                <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
-                  {message}
-                </Alert>
+                (message === 'success')
+                  ? (
+                    <Alert variant="outlined" severity="success" className="mb-5">
+                      Your account registration has been
+                      <strong> successful</strong>
+                      . Please
+                      <strong> login </strong>
+                      to continue.
+                    </Alert>
+                  )
+                  : (
+                    <Alert variant="outlined" severity="warning" className="mb-5">
+                      {message}
+                    </Alert>
+                  )
               )
             }
             <Grid container spacing={2}>

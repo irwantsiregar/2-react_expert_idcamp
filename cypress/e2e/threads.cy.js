@@ -11,14 +11,15 @@ describe('Threads spec', () => {
   });
 
   it('should display threads(root) page correctly', () => {
-    cy.get('div.MuiCard-root').first().find('a.MuiLink-root').click();
+    cy.get('div.MuiCard-root').first().find('a.MuiLink-root').should('be.visible')
+      .click();
     cy.url().should('match', /thread\/.+$/);
-    cy.get('div.MuiCard-root').find('h6');
+    cy.get('div.MuiCard-root').find('h6').should('be.visible');
   });
 
   it('should try liking the thread when not logged in', () => {
     cy.get('div.MuiCard-root>.MuiCardActions-root').first().find('p[aria-label="liked thread"]').click();
-    cy.get('div.MuiModal-root').contains('h2#modal-modal-title', 'Uppss !!');
+    cy.get('div.MuiModal-root').contains('h2#modal-modal-title', 'Uppss !!').should('be.visible');
     cy.get('p#button-close>svg[data-testid="CloseIcon"]').click();
   });
 
