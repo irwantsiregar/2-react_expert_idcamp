@@ -1,8 +1,9 @@
 {
-  "name": "react-expert-study-case",
+  "name": "diskus-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.0.0-alpha.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.15",
@@ -10,6 +11,7 @@
     "@reduxjs/toolkit": "^1.9.0",
     "@storybook/cli": "^6.5.15",
     "html-react-parser": "^3.0.4",
+    "node-polyfill-webpack-plugin": "^2.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
