@@ -11,10 +11,6 @@ export default function ThreadList({
   keyword, keywordChange, category, categoryChange,
   timePosted, timePostedChange,
 }) {
-  const alerNotThread = () => (
-    setTimeout(<Alert variant="outlined" severity="info" className="mb-5 bg-blue-400">Thread not available !</Alert>, 200)
-  );
-
   return (
     <>
       <CssBaseline />

@@ -37,7 +37,7 @@ export default function LoginInput({ login, message }) {
           <Box noValidate sx={{ mt: 1 }} className="input-group">
             {
               message && (
-                <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
+                <Alert variant="outlined" severity="warning" className="mb-5 bg-red-300">
                   {message}
                 </Alert>
               )
@@ -83,7 +83,7 @@ export default function LoginInput({ login, message }) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link href="/register" variant="body2" data-testid="login-to-register">
                   Dont have an account? Sign Up
                 </Link>
               </Grid>

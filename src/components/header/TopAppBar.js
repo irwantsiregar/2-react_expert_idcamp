@@ -52,6 +52,11 @@ export default function TopAppBar({
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [openModal, onModalChange] = useModal(false);
 
+  const handleLogOut = () => {
+    logOut();
+    onModalChange(true);
+  };
+
   const handleCloseNavMenuOpenModal = () => {
     onModalChange(true);
     setAnchorElNav(null);
@@ -109,7 +114,7 @@ export default function TopAppBar({
             </ListItemIcon>
             Profile
           </MenuItem>
-          <MenuItem onClick={logOut}>
+          <MenuItem onClick={handleLogOut}>
             <ListItemIcon>
               <LogoutIcon />
             </ListItemIcon>
