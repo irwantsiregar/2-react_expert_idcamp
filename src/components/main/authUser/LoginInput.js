@@ -83,7 +83,7 @@ export default function LoginInput({ login, message }) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/register" variant="body2">
+                <Link href="/register" variant="body2" data-testid="login-to-register">
                   Dont have an account? Sign Up
                 </Link>
               </Grid>

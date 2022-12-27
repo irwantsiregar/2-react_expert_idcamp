@@ -12,6 +12,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginInput from '../LoginInput';
+import RegisterInput from '../RegisterInput';
 import '@testing-library/jest-dom';
 
 describe('LoginInput component', () => {
@@ -81,18 +82,5 @@ describe('LoginInput component', () => {
       email: 'sayna@gmail.com',
       password: 'sayna',
     });
-  });
-
-  it('should visible register page when link is clicked', async () => {
-    // arrange
-    render(<LoginInput login={() => { }} message="" />);
-
-    const linkToRegister = await screen.getByRole('link', { name: 'Dont have an account? Sign Up' });
-
-    // action
-    await userEvent.click(linkToRegister);
-
-    // // assert
-    expect(linkToRegister).toBeVisible();
   });
 });
