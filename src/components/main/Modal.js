@@ -32,7 +32,10 @@ export default function ModalCustom({ open, handleClose, children }) {
 }
 
 ModalCustom.propTypes = {
+  /** function to handle closing the modal when the button is clicked  */
   handleClose: PropTypes.func.isRequired,
+  /** value set by the user. defaults false to close and true to open modal. */
   open: PropTypes.bool.isRequired,
+  /** values attached as child modals such as strings or html elements */
   children: PropTypes.object,
 };

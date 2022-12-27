@@ -6,7 +6,6 @@ import ThreadsPage from './pages/ThreadsPage';
 import LeaderBoardsPage from './pages/LeaderBoardsPage';
 import AddThreadPage from './pages/AddThreadPage';
 import MyProfilPage from './pages/MyProfilPage';
-import NotFoundPage from './pages/NotFoundPage';
 import DetailThreadPage from './pages/DetailThreadPage';
 import TopAppBar from './components/header/TopAppBar';
 import BottomAppBar from './components/footer/BottomAppBar';
@@ -35,7 +34,6 @@ export default function App() {
 
   const onLogOut = () => {
     dispatch(asyncUnsetAuthUser());
-    navigate('/login');
   };
 
   if (isPreload) {

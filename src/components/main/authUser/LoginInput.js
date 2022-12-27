@@ -37,7 +37,7 @@ export default function LoginInput({ login, message }) {
           <Box noValidate sx={{ mt: 1 }} className="input-group">
             {
               message && (
-                <Alert variant="outlined" severity="error" className="mb-5 bg-red-300">
+                <Alert variant="outlined" severity="warning" className="mb-5 bg-red-300">
                   {message}
                 </Alert>
               )
