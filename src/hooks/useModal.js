@@ -7,7 +7,7 @@ function useModal(defaultValue = false) {
     setValue(valueBool);
   }
 
-  return [];
+  return [value, handleValueChange, setValue];
 }
 
 export default useModal;
